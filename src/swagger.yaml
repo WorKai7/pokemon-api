@@ -1,675 +1,675 @@
 openapi: 3.0.0
 info:
-  title: API Pokémons
-  version: 1.0.0
-  description: API pour gérer des cartes Pokémon et des utilisateurs
+    title: API Pokémons
+    version: 1.0.0
+    description: API pour gérer des cartes Pokémon et des utilisateurs
 servers:
-  - url: http://localhost:3000
-    description: Serveur local
+    - url: http://localhost:3000
+      description: Serveur local
 paths:
-  /users:
-    post:
-      summary: Crée un nouvel utilisateur
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: test@test.test
-                password:
-                  type: string
-                  example: passtest
-      responses:
-        '201':
-          description: Utilisateur créé
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  email:
-                    type: string
-                    example: test@test.test
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
-    get:
-      summary: Récupère la liste des utilisateurs
-      responses:
-        '200':
-          description: Liste des utilisateurs
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-        '204':
-          description: Aucun utilisateur trouvé
-          content:
-            application/json:
-              schema:
-                type: array
-                example: []
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
+    /users:
+        post:
+            summary: Crée un nouvel utilisateur
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    example: test@test.test
+                                password:
+                                    type: string
+                                    example: passtest
+            responses:
+                '201':
+                    description: Utilisateur créé
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    email:
+                                        type: string
+                                        example: test@test.test
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
+        get:
+            summary: Récupère la liste des utilisateurs
+            responses:
+                '200':
+                    description: Liste des utilisateurs
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/User'
+                '204':
+                    description: Aucun utilisateur trouvé
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                example: []
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
 
-  /users/login:
-    post:
-      summary: Authentification d'un utilisateur
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: test@test.test
-                password:
-                  type: string
-                  example: passtest
-      responses:
-        '201':
-          description: Connexion réussie
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  token:
-                    type: string
-                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-                  message:
-                    type: string
-                    example: Connexion réussie
-        '404':
-          description: Email inconnu
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Email inconnu
-        '400':
-          description: Mot de passe invalide
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Incorrect password
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
+    /users/login:
+        post:
+            summary: Authentification d'un utilisateur
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    example: test@test.test
+                                password:
+                                    type: string
+                                    example: passtest
+            responses:
+                '201':
+                    description: Connexion réussie
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    token:
+                                        type: string
+                                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                                    message:
+                                        type: string
+                                        example: Connexion réussie
+                '404':
+                    description: Email inconnu
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Email inconnu
+                '400':
+                    description: Mot de passe invalide
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Incorrect password
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
 
-  /users/{userId}:
-    get:
-      summary: Récupère un utilisateur par son ID
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
-          example: 1
-      responses:
-        '200':
-          description: Utilisateur trouvé
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '404':
-          description: Utilisateur non trouvé
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: User not found
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
-    patch:
-      summary: Met à jour un utilisateur
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
-          example: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserInput'
-      responses:
-        '200':
-          description: Utilisateur mis à jour
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '404':
-          description: Utilisateur non trouvé
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: User not found
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
-    delete:
-      summary: Supprime un utilisateur
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
-          example: 1
-      responses:
-        '200':
-          description: Utilisateur supprimé
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: User deleted
-        '404':
-          description: Utilisateur non trouvé
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: User not found
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
+    /users/{userId}:
+        get:
+            summary: Récupère un utilisateur par son ID
+            parameters:
+                - name: userId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                '200':
+                    description: Utilisateur trouvé
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                '404':
+                    description: Utilisateur non trouvé
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: User not found
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
+        patch:
+            summary: Met à jour un utilisateur
+            security:
+                - bearerAuth: []
+            parameters:
+                - name: userId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UserInput'
+            responses:
+                '200':
+                    description: Utilisateur mis à jour
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                '404':
+                    description: Utilisateur non trouvé
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: User not found
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
+        delete:
+            summary: Supprime un utilisateur
+            security:
+                - bearerAuth: []
+            parameters:
+                - name: userId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                '200':
+                    description: Utilisateur supprimé
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: User deleted
+                '404':
+                    description: Utilisateur non trouvé
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: User not found
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
 
-  /pokemons-cards:
-    get:
-      summary: Récupère la liste des cartes Pokémon
-      responses:
-        '200':
-          description: Liste des cartes Pokémon
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PokemonCard'
-        '204':
-          description: Aucune carte Pokémon trouvée
-          content:
-            application/json:
-              schema:
-                type: array
-                example: []
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
-    post:
-      summary: Crée une nouvelle carte Pokémon
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PokemonCardInput'
-      responses:
-        '201':
-          description: Carte Pokémon créée
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PokemonCard'
-        '400':
-          description: Données invalides
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Le champ "name" doit être rempli
-        '404':
-          description: Type de Pokémon non trouvé
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Le type entré dans le body de la requête (6) n'existe pas
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
+    /pokemons-cards:
+        get:
+            summary: Récupère la liste des cartes Pokémon
+            responses:
+                '200':
+                    description: Liste des cartes Pokémon
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/PokemonCard'
+                '204':
+                    description: Aucune carte Pokémon trouvée
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                example: []
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
+        post:
+            summary: Crée une nouvelle carte Pokémon
+            security:
+                - bearerAuth: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PokemonCardInput'
+            responses:
+                '201':
+                    description: Carte Pokémon créée
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PokemonCard'
+                '400':
+                    description: Données invalides
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Le champ "name" doit être rempli
+                '404':
+                    description: Type de Pokémon non trouvé
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Le type entré dans le body de la requête (6) n'existe pas
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
 
-  /pokemons-cards/{pokemonCardId}:
-    get:
-      summary: Récupère une carte Pokémon par son ID
-      parameters:
-        - name: pokemonCardId
-          in: path
-          required: true
-          schema:
-            type: integer
-          example: 1
-      responses:
-        '200':
-          description: Carte Pokémon trouvée
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PokemonCard'
-        '404':
-          description: Carte Pokémon non trouvée
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: PokemonCard not found
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
-    patch:
-      summary: Met à jour une carte Pokémon
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: pokemonCardId
-          in: path
-          required: true
-          schema:
-            type: integer
-          example: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PokemonCardInput'
-      responses:
-        '200':
-          description: Carte Pokémon mise à jour
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PokemonCard'
-        '400':
-          description: Données invalides
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Le champ "name" doit être rempli
-        '404':
-          description: Carte Pokémon ou type non trouvé
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Le pokémon entré en paramètre (1) n'existe pas
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
-    delete:
-      summary: Supprime une carte Pokémon
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: pokemonCardId
-          in: path
-          required: true
-          schema:
-            type: integer
-          example: 1
-      responses:
-        '204':
-          description: Carte Pokémon supprimée
-        '404':
-          description: Carte Pokémon non trouvée
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Le pokémon n°1 n'existe pas
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
-  /pokemon-attacks:
-    get:
-      summary: Récupère la liste des attaques Pokémon
-      responses:
-        '200':
-          description: Liste des attaques Pokémon
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PokemonAttack'
-        '204':
-          description: Aucune attaque Pokémon trouvée
-          content:
-            application/json:
-              schema:
-                type: array
-                example: []
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
-    post:
-      summary: Crée une nouvelle attaque Pokémon
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PokemonAttackInput'
-      responses:
-        '201':
-          description: Attaque Pokémon créée
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PokemonAttack'
-        '400':
-          description: Données invalides ou manquantes
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Field(s) missing
-                  fields:
-                    type: array
-                    items:
-                      type: string
-                    example: ["name", "damages"]
-        '404':
-          description: Type de Pokémon non trouvé
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Unknown type
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
+    /pokemons-cards/{pokemonCardId}:
+        get:
+            summary: Récupère une carte Pokémon par son ID
+            parameters:
+                - name: pokemonCardId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                '200':
+                    description: Carte Pokémon trouvée
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PokemonCard'
+                '404':
+                    description: Carte Pokémon non trouvée
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: PokemonCard not found
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
+        patch:
+            summary: Met à jour une carte Pokémon
+            security:
+                - bearerAuth: []
+            parameters:
+                - name: pokemonCardId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PokemonCardInput'
+            responses:
+                '200':
+                    description: Carte Pokémon mise à jour
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PokemonCard'
+                '400':
+                    description: Données invalides
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Le champ "name" doit être rempli
+                '404':
+                    description: Carte Pokémon ou type non trouvé
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Le pokémon entré en paramètre (1) n'existe pas
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
+        delete:
+            summary: Supprime une carte Pokémon
+            security:
+                - bearerAuth: []
+            parameters:
+                - name: pokemonCardId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                '204':
+                    description: Carte Pokémon supprimée
+                '404':
+                    description: Carte Pokémon non trouvée
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Le pokémon n°1 n'existe pas
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
+    /pokemon-attacks:
+        get:
+            summary: Récupère la liste des attaques Pokémon
+            responses:
+                '200':
+                    description: Liste des attaques Pokémon
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/PokemonAttack'
+                '204':
+                    description: Aucune attaque Pokémon trouvée
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                example: []
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
+        post:
+            summary: Crée une nouvelle attaque Pokémon
+            security:
+                - bearerAuth: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PokemonAttackInput'
+            responses:
+                '201':
+                    description: Attaque Pokémon créée
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PokemonAttack'
+                '400':
+                    description: Données invalides ou manquantes
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Field(s) missing
+                                    fields:
+                                        type: array
+                                        items:
+                                            type: string
+                                        example: ['name', 'damages']
+                '404':
+                    description: Type de Pokémon non trouvé
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Unknown type
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
 
-  /pokemon-attacks/{pokemonAttackId}:
-    get:
-      summary: Récupère une attaque Pokémon par son ID
-      parameters:
-        - name: pokemonAttackId
-          in: path
-          required: true
-          schema:
-            type: integer
-          example: 1
-      responses:
-        '200':
-          description: Attaque Pokémon trouvée
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PokemonAttack'
-        '404':
-          description: Attaque Pokémon non trouvée
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: PokemonAttack not found
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
-    patch:
-      summary: Met à jour une attaque Pokémon
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: pokemonAttackId
-          in: path
-          required: true
-          schema:
-            type: integer
-          example: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PokemonAttackInput'
-      responses:
-        '200':
-          description: Attaque Pokémon mise à jour
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PokemonAttack'
-        '400':
-          description: Données invalides ou manquantes
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Field(s) missing
-                  fields:
-                    type: array
-                    items:
-                      type: string
-                    example: ["name", "damages"]
-        '404':
-          description: Attaque Pokémon ou type non trouvé
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Attack not found
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
-    delete:
-      summary: Supprime une attaque Pokémon
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: pokemonAttackId
-          in: path
-          required: true
-          schema:
-            type: integer
-          example: 1
-      responses:
-        '200':
-          description: Attaque Pokémon supprimée
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Attack deleted
-        '404':
-          description: Attaque Pokémon non trouvée
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Attack not found
-        '500':
-          description: Erreur serveur
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Erreur interne du serveur
+    /pokemon-attacks/{pokemonAttackId}:
+        get:
+            summary: Récupère une attaque Pokémon par son ID
+            parameters:
+                - name: pokemonAttackId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                '200':
+                    description: Attaque Pokémon trouvée
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PokemonAttack'
+                '404':
+                    description: Attaque Pokémon non trouvée
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: PokemonAttack not found
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
+        patch:
+            summary: Met à jour une attaque Pokémon
+            security:
+                - bearerAuth: []
+            parameters:
+                - name: pokemonAttackId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PokemonAttackInput'
+            responses:
+                '200':
+                    description: Attaque Pokémon mise à jour
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PokemonAttack'
+                '400':
+                    description: Données invalides ou manquantes
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Field(s) missing
+                                    fields:
+                                        type: array
+                                        items:
+                                            type: string
+                                        example: ['name', 'damages']
+                '404':
+                    description: Attaque Pokémon ou type non trouvé
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Attack not found
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
+        delete:
+            summary: Supprime une attaque Pokémon
+            security:
+                - bearerAuth: []
+            parameters:
+                - name: pokemonAttackId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                '200':
+                    description: Attaque Pokémon supprimée
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Attack deleted
+                '404':
+                    description: Attaque Pokémon non trouvée
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Attack not found
+                '500':
+                    description: Erreur serveur
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Erreur interne du serveur
 
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-  schemas:
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        email:
-          type: string
-          example: test@test.test
-        password:
-          type: string
-          example: password
-    PokemonCard:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Pikachu
-        pokedexId:
-          type: integer
-          example: 25
-        typeId:
-          type: integer
-          example: 6
-        lifePoints:
-          type: integer
-          example: 35
-        size:
-          type: number
-          example: 0.4
-        weight:
-          type: number
-          example: 6.0
-        imageUrl:
-          type: string
-          example: https://www.pokepedia.fr/images/thumb/3/3c/Mammochon-DP.png/250px-Mammochon-DP.png
-    PokemonAttack:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Attaque de zinzin
-        damages:
-          type: integer
-          example: 50
-        typeId:
-          type: integer
-          example: 1
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+    schemas:
+        User:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                email:
+                    type: string
+                    example: test@test.test
+                password:
+                    type: string
+                    example: password
+        PokemonCard:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                name:
+                    type: string
+                    example: Pikachu
+                pokedexId:
+                    type: integer
+                    example: 25
+                typeId:
+                    type: integer
+                    example: 6
+                lifePoints:
+                    type: integer
+                    example: 35
+                size:
+                    type: number
+                    example: 0.4
+                weight:
+                    type: number
+                    example: 6.0
+                imageUrl:
+                    type: string
+                    example: https://www.pokepedia.fr/images/thumb/3/3c/Mammochon-DP.png/250px-Mammochon-DP.png
+        PokemonAttack:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                name:
+                    type: string
+                    example: Attaque de zinzin
+                damages:
+                    type: integer
+                    example: 50
+                typeId:
+                    type: integer
+                    example: 1

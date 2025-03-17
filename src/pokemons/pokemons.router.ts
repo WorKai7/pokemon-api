@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import { createPokemon, getPokemon, getPokemons, updatePokemon, deletePokemon } from './pokemons.controller';
+import {
+    createPokemon,
+    getPokemon,
+    getPokemons,
+    updatePokemon,
+    deletePokemon,
+} from './pokemons.controller';
 import { verifyJWT } from '../common/verify';
 
 export const pokemonRouter = Router();

@@ -23,5 +23,5 @@ app.use('/pokemon-attacks', pokemonAttacksRouter);
 export const server = app.listen(port);
 
 export function stopServer() {
-  server.close();
+    server.close();
 }
