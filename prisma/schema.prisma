@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Type {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  pokemonCards PokemonCard[] @relation("PokemonType")
+  weakPokemons PokemonCard[] @relation("PokemonWeakness")
+  attacks PokemonAttack[] @relation("AttackType")
+}
+
+model PokemonCard {
+  id Int @id @default(autoincrement())
+  name String @unique
+  pokedexId Int @unique
+  type Type @relation(name: "PokemonType", fields: [typeId], references: [id])
+  typeId Int
+  lifePoints Int
+  size Float?
+  weight Float?
+  imageUrl String?
+  weakness Type? @relation(name: "PokemonWeakness", fields: [weaknessId], references: [id])
+  weaknessId Int?
+  attack PokemonAttack @relation(name: "Attack", fields: [attackId], references: [id])
+  attackId Int
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String
+}
+
+model PokemonAttack {
+  id Int @id @default(autoincrement())
+  name String
+  damages Int
+  type Type @relation(name: "AttackType", fields: [typeId], references: [id])
+  typeId Int
+  
+  pokemonsCards PokemonCard[] @relation("Attack")
+}
