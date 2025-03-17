@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from "express";
 
 // Logs du serveur
 export const logger = (req: Request, _res: Response, next: NextFunction) => {

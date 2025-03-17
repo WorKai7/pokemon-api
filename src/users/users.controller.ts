@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
-import prisma from '../client';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import { Request, Response } from "express";
+import prisma from "../client";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 // Requête pour login un User
 export const loginUser = async (req: Request, res: Response) => {
@@ -11,14 +11,14 @@ export const loginUser = async (req: Request, res: Response) => {
 
         // Vérification de l'email
         if (!user) {
-            res.status(404).json({ error: 'Email not found' });
+            res.status(404).json({ error: "Email not found" });
             return;
         }
 
         // Vérification du mot de passe
         const isValid = await bcrypt.compare(password, user.password);
         if (!isValid) {
-            res.status(400).json({ error: 'Wrong password' });
+            res.status(400).json({ error: "Wrong password" });
             return;
         }
 
@@ -28,9 +28,9 @@ export const loginUser = async (req: Request, res: Response) => {
             { expiresIn: process.env.JWT_EXPIRES_IN } as jwt.SignOptions,
         );
 
-        res.status(201).send({ token: token, message: 'Connexion réussie' });
+        res.status(201).send({ token: token, message: "Connexion réussie" });
     } catch (error) {
-        res.status(500).json({ error: 'Erreur serveur' });
+        res.status(500).json({ error: "Erreur serveur" });
     }
 };
 
@@ -42,7 +42,7 @@ export const createUser = async (req: Request, res: Response) => {
         await prisma.user.create({ data: data });
         res.status(201).send({ email: data.email });
     } catch (error) {
-        res.status(500).json({ error: 'Erreur serveur' });
+        res.status(500).json({ error: "Erreur serveur" });
     }
 };
 
@@ -56,7 +56,7 @@ export const getUsers = async (_req: Request, res: Response) => {
             res.status(204).send([]);
         }
     } catch (error) {
-        res.status(500).json({ error: 'Erreur serveur' });
+        res.status(500).json({ error: "Erreur serveur" });
     }
 };
 
@@ -70,10 +70,10 @@ export const getUser = async (req: Request, res: Response) => {
         if (user) {
             res.status(200).json(user);
         } else {
-            res.status(404).json({ error: 'User not found' });
+            res.status(404).json({ error: "User not found" });
         }
     } catch (error) {
-        res.status(500).json({ error: 'Erreur serveur' });
+        res.status(500).json({ error: "Erreur serveur" });
     }
 };
 
@@ -87,7 +87,7 @@ export const updateUser = async (req: Request, res: Response) => {
         });
 
         if (!userToUpdate) {
-            res.status(404).json({ error: 'User not found' });
+            res.status(404).json({ error: "User not found" });
             return;
         }
 
@@ -103,7 +103,7 @@ export const updateUser = async (req: Request, res: Response) => {
         });
         res.status(200).json(data);
     } catch (error) {
-        res.status(500).json({ error: 'Erreur serveur' });
+        res.status(500).json({ error: "Erreur serveur" });
     }
 };
 
@@ -115,13 +115,13 @@ export const deleteUser = async (req: Request, res: Response) => {
         });
 
         if (!userToDelete) {
-            res.status(404).json({ error: 'User not found' });
+            res.status(404).json({ error: "User not found" });
             return;
         }
 
         await prisma.user.delete({ where: { id: +req.params.userId } });
-        res.status(200).json({ message: 'User deleted' });
+        res.status(200).json({ message: "User deleted" });
     } catch (error) {
-        res.status(500).json({ error: 'Erreur serveur' });
+        res.status(500).json({ error: "Erreur serveur" });
     }
 };

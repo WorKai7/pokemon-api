@@ -34,9 +34,18 @@ export const getPokemonAttack = async (req: Request, res: Response) => {
 export const createPokemonAttack = async (req: Request, res: Response) => {
     try {
         const missingFields = [];
-        req.body.name ?? missingFields.push("name");
-        req.body.damages ?? missingFields.push("damages");
-        req.body.typeId ?? missingFields.push("typeId");
+
+        if (!req.body.name) {
+            missingFields.push("name");
+        }
+
+        if (!req.body.damages) {
+            missingFields.push("damages");
+        }
+
+        if (!req.body.typeId) {
+            missingFields.push("typeId");
+        }
 
         if (missingFields.length > 0) {
             res.status(400).json({
@@ -78,9 +87,18 @@ export const createPokemonAttack = async (req: Request, res: Response) => {
 export const updatePokemonAttack = async (req: Request, res: Response) => {
     try {
         const missingFields = [];
-        req.body.name ?? missingFields.push("name");
-        req.body.damages ?? missingFields.push("damages");
-        req.body.typeId ?? missingFields.push("typeId");
+
+        if (!req.body.name) {
+            missingFields.push("name");
+        }
+
+        if (!req.body.damages) {
+            missingFields.push("damages");
+        }
+
+        if (!req.body.typeId) {
+            missingFields.push("typeId");
+        }
 
         if (missingFields.length > 0) {
             res.status(400).json({

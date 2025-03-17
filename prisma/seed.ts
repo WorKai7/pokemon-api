@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcrypt';
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -16,61 +16,61 @@ async function main() {
 
     await prisma.type.createMany({
         data: [
-            { name: 'Normal' },
-            { name: 'Fire' },
-            { name: 'Water' },
-            { name: 'Grass' },
-            { name: 'Electric' },
-            { name: 'Ice' },
-            { name: 'Fighting' },
-            { name: 'Poison' },
-            { name: 'Ground' },
-            { name: 'Flying' },
-            { name: 'Psychic' },
-            { name: 'Bug' },
-            { name: 'Rock' },
-            { name: 'Ghost' },
-            { name: 'Dragon' },
-            { name: 'Dark' },
-            { name: 'Steel' },
-            { name: 'Fairy' },
+            { name: "Normal" },
+            { name: "Fire" },
+            { name: "Water" },
+            { name: "Grass" },
+            { name: "Electric" },
+            { name: "Ice" },
+            { name: "Fighting" },
+            { name: "Poison" },
+            { name: "Ground" },
+            { name: "Flying" },
+            { name: "Psychic" },
+            { name: "Bug" },
+            { name: "Rock" },
+            { name: "Ghost" },
+            { name: "Dragon" },
+            { name: "Dark" },
+            { name: "Steel" },
+            { name: "Fairy" },
         ],
     });
 
     await prisma.pokemonAttack.createMany({
         data: [
             {
-                name: 'Flammeche',
+                name: "Flammeche",
                 damages: 40,
                 typeId: 2, // Type: Feu
             },
             {
-                name: 'Hydrocanon',
+                name: "Hydrocanon",
                 damages: 110,
                 typeId: 3, // Type: Eau
             },
             {
-                name: 'Lance-Soleil',
+                name: "Lance-Soleil",
                 damages: 120,
                 typeId: 4, // Type: Plante
             },
             {
-                name: 'Tonnerre',
+                name: "Tonnerre",
                 damages: 110,
                 typeId: 5, // Type: Électrik
             },
             {
-                name: 'Laser Glace',
+                name: "Laser Glace",
                 damages: 90,
                 typeId: 6, // Type: Glace
             },
             {
-                name: 'Poing-Karaté',
+                name: "Poing-Karaté",
                 damages: 50,
                 typeId: 7, // Type: Combat
             },
             {
-                name: 'Dracosouffle',
+                name: "Dracosouffle",
                 damages: 60,
                 typeId: 15, // Type: Dragon
             },
@@ -80,12 +80,12 @@ async function main() {
                 typeId: 14, // Type: Spectre
             },
             {
-                name: 'Éclat Magique',
+                name: "Éclat Magique",
                 damages: 80,
                 typeId: 18, // Type: Fée
             },
             {
-                name: 'Séisme',
+                name: "Séisme",
                 damages: 100,
                 typeId: 9, // Type: Sol
             },
@@ -95,36 +95,36 @@ async function main() {
     await prisma.pokemonCard.createMany({
         data: [
             {
-                name: 'Dracaufeu',
+                name: "Dracaufeu",
                 pokedexId: 6,
                 typeId: 2,
                 lifePoints: 78,
                 size: 1.7,
                 weight: 90.5,
                 imageUrl:
-                    'https://www.pokepedia.fr/images/thumb/1/17/Dracaufeu-RFVF.png/250px-Dracaufeu-RFVF.png',
+                    "https://www.pokepedia.fr/images/thumb/1/17/Dracaufeu-RFVF.png/250px-Dracaufeu-RFVF.png",
                 attackId: 1,
             },
             {
-                name: 'Taupiqueur',
+                name: "Taupiqueur",
                 pokedexId: 50,
                 typeId: 9,
                 lifePoints: 10,
                 size: 0.2,
                 weight: 0.8,
                 imageUrl:
-                    'https://www.pokepedia.fr/images/thumb/a/aa/Taupiqueur-RFVF.png/250px-Taupiqueur-RFVF.png',
+                    "https://www.pokepedia.fr/images/thumb/a/aa/Taupiqueur-RFVF.png/250px-Taupiqueur-RFVF.png",
                 attackId: 10,
             },
             {
-                name: 'Mammochon',
+                name: "Mammochon",
                 pokedexId: 473,
                 typeId: 6,
                 lifePoints: 110,
                 size: 2.5,
                 weight: 291.0,
                 imageUrl:
-                    'https://www.pokepedia.fr/images/thumb/3/3c/Mammochon-DP.png/250px-Mammochon-DP.png',
+                    "https://www.pokepedia.fr/images/thumb/3/3c/Mammochon-DP.png/250px-Mammochon-DP.png",
                 attackId: 5,
             },
         ],
@@ -132,8 +132,8 @@ async function main() {
 
     await prisma.user.create({
         data: {
-            email: 'admin@admin.admin',
-            password: await bcrypt.hash('admin', 10),
+            email: "admin@admin.admin",
+            password: await bcrypt.hash("admin", 10),
         },
     });
 }

@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import prisma from '../client';
+import { Request, Response } from "express";
+import prisma from "../client";
 
 // Requête pour récuperer la liste des pokémons
 export const getPokemons = async (_req: Request, res: Response) => {
@@ -12,7 +12,7 @@ export const getPokemons = async (_req: Request, res: Response) => {
             res.status(204).send([]);
         }
     } catch (error) {
-        res.status(500).json({ error: 'Erreur serveur' });
+        res.status(500).json({ error: "Erreur serveur" });
     }
 };
 
@@ -27,10 +27,10 @@ export const getPokemon = async (req: Request, res: Response) => {
         if (pokemons) {
             res.status(200).send(pokemons);
         } else {
-            res.status(404).send({ error: 'PokemonCard not found' });
+            res.status(404).send({ error: "PokemonCard not found" });
         }
     } catch (error) {
-        res.status(500).json({ error: 'Erreur serveur' });
+        res.status(500).json({ error: "Erreur serveur" });
     }
 };
 
@@ -39,15 +39,30 @@ export const createPokemon = async (req: Request, res: Response) => {
     try {
         // Vérification des champs required
         const missingFields = [];
-        req.body.name ?? missingFields.push('name');
-        req.body.pokedexId ?? missingFields.push('pokedexId');
-        req.body.typeId ?? missingFields.push('typeId');
-        req.body.lifePoints ?? missingFields.push('lifePoints');
-        req.body.attackId ?? missingFields.push('attackId');
+
+        if (!req.body.name) {
+            missingFields.push("name");
+        }
+
+        if (!req.body.pokedexId) {
+            missingFields.push("pokedexId");
+        }
+
+        if (!req.body.typeId) {
+            missingFields.push("typeId");
+        }
+
+        if (!req.body.lifePoints) {
+            missingFields.push("lifePoints");
+        }
+
+        if (!req.body.attackId) {
+            missingFields.push("attackId");
+        }
 
         if (missingFields.length > 0) {
             res.status(400).json({
-                error: 'Field(s) missing',
+                error: "Field(s) missing",
                 fields: missingFields,
             });
             return;
@@ -58,7 +73,7 @@ export const createPokemon = async (req: Request, res: Response) => {
             where: { id: +req.body.typeId },
         });
         if (!typeExists) {
-            res.status(400).json({ error: 'Unknown type' });
+            res.status(400).json({ error: "Unknown type" });
             return;
         }
 
@@ -66,7 +81,7 @@ export const createPokemon = async (req: Request, res: Response) => {
             where: { id: req.body.attackId },
         });
         if (!attackExists) {
-            res.status(400).json({ error: 'Unknown attack' });
+            res.status(400).json({ error: "Unknown attack" });
             return;
         }
 
@@ -75,7 +90,7 @@ export const createPokemon = async (req: Request, res: Response) => {
                 where: { id: req.body.weaknessId },
             });
             if (!weaknessExists) {
-                res.status(400).json({ error: 'Unknown weakness' });
+                res.status(400).json({ error: "Unknown weakness" });
                 return;
             }
         }
@@ -90,7 +105,7 @@ export const createPokemon = async (req: Request, res: Response) => {
             },
         });
         if (doublon) {
-            res.status(400).json({ error: 'name or pokedexId already exist' });
+            res.status(400).json({ error: "name or pokedexId already exist" });
             return;
         }
 
@@ -99,7 +114,7 @@ export const createPokemon = async (req: Request, res: Response) => {
         await prisma.pokemonCard.create({ data: req.body });
         res.status(201).json(req.body);
     } catch (error) {
-        res.status(500).json({ error: 'Erreur serveur' });
+        res.status(500).json({ error: "Erreur serveur" });
     }
 };
 
@@ -108,15 +123,30 @@ export const updatePokemon = async (req: Request, res: Response) => {
     try {
         // Vérification des champs required
         const missingFields = [];
-        req.body.name ?? missingFields.push('name');
-        req.body.pokedexId ?? missingFields.push('pokedexId');
-        req.body.typeId ?? missingFields.push('typeId');
-        req.body.lifePoints ?? missingFields.push('lifePoints');
-        req.body.attackId ?? missingFields.push('attackId');
+
+        if (!req.body.name) {
+            missingFields.push("name");
+        }
+
+        if (!req.body.pokedexId) {
+            missingFields.push("pokedexId");
+        }
+
+        if (!req.body.typeId) {
+            missingFields.push("typeId");
+        }
+
+        if (!req.body.lifePoints) {
+            missingFields.push("lifePoints");
+        }
+
+        if (!req.body.attackId) {
+            missingFields.push("attackId");
+        }
 
         if (missingFields.length > 0) {
             res.status(400).json({
-                error: 'Field(s) missing',
+                error: "Field(s) missing",
                 fields: missingFields,
             });
             return;
@@ -127,7 +157,7 @@ export const updatePokemon = async (req: Request, res: Response) => {
             where: { id: +req.body.typeId },
         });
         if (!typeExists) {
-            res.status(400).json({ error: 'Unknown type' });
+            res.status(400).json({ error: "Unknown type" });
             return;
         }
 
@@ -135,7 +165,7 @@ export const updatePokemon = async (req: Request, res: Response) => {
             where: { id: req.body.attackId },
         });
         if (!attackExists) {
-            res.status(400).json({ error: 'Unknown attack' });
+            res.status(400).json({ error: "Unknown attack" });
             return;
         }
 
@@ -144,7 +174,7 @@ export const updatePokemon = async (req: Request, res: Response) => {
                 where: { id: req.body.weaknessId },
             });
             if (!weaknessExists) {
-                res.status(400).json({ error: 'Unknown weakness' });
+                res.status(400).json({ error: "Unknown weakness" });
                 return;
             }
         }
@@ -159,7 +189,7 @@ export const updatePokemon = async (req: Request, res: Response) => {
             },
         });
         if (doublon) {
-            res.status(400).json({ error: 'name or pokedexId already exist' });
+            res.status(400).json({ error: "name or pokedexId already exist" });
             return;
         }
 
@@ -168,7 +198,7 @@ export const updatePokemon = async (req: Request, res: Response) => {
             where: { id: +req.params.pokemonCardId },
         });
         if (!updatePokemon) {
-            res.status(404).json({ error: 'Pokemon not found' });
+            res.status(404).json({ error: "Pokemon not found" });
             return;
         }
 
@@ -179,7 +209,7 @@ export const updatePokemon = async (req: Request, res: Response) => {
         });
         res.status(200).json(req.body);
     } catch (error) {
-        res.status(500).json({ error: 'Erreur serveur' });
+        res.status(500).json({ error: "Erreur serveur" });
     }
 };
 
@@ -191,7 +221,7 @@ export const deletePokemon = async (req: Request, res: Response) => {
             where: { id: +req.params.pokemonCardId },
         });
         if (!deletePokemon) {
-            res.status(404).json({ error: 'Pokemon not found' });
+            res.status(404).json({ error: "Pokemon not found" });
             return;
         }
 
@@ -202,6 +232,6 @@ export const deletePokemon = async (req: Request, res: Response) => {
             `Le pokémon n°${req.params.pokemonCardId} à été supprimé de la base de données avec succès !`,
         );
     } catch (error) {
-        res.status(500).json({ error: 'Erreur serveur' });
+        res.status(500).json({ error: "Erreur serveur" });
     }
 };

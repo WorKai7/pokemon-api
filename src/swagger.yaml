@@ -24,7 +24,7 @@ paths:
                                     type: string
                                     example: passtest
             responses:
-                '201':
+                "201":
                     description: Utilisateur créé
                     content:
                         application/json:
@@ -34,7 +34,7 @@ paths:
                                     email:
                                         type: string
                                         example: test@test.test
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -44,22 +44,22 @@ paths:
         get:
             summary: Récupère la liste des utilisateurs
             responses:
-                '200':
+                "200":
                     description: Liste des utilisateurs
                     content:
                         application/json:
                             schema:
                                 type: array
                                 items:
-                                    $ref: '#/components/schemas/User'
-                '204':
+                                    $ref: "#/components/schemas/User"
+                "204":
                     description: Aucun utilisateur trouvé
                     content:
                         application/json:
                             schema:
                                 type: array
                                 example: []
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -84,7 +84,7 @@ paths:
                                     type: string
                                     example: passtest
             responses:
-                '201':
+                "201":
                     description: Connexion réussie
                     content:
                         application/json:
@@ -97,21 +97,21 @@ paths:
                                     message:
                                         type: string
                                         example: Connexion réussie
-                '404':
+                "404":
                     description: Email inconnu
                     content:
                         text/plain:
                             schema:
                                 type: string
                                 example: Email inconnu
-                '400':
+                "400":
                     description: Mot de passe invalide
                     content:
                         text/plain:
                             schema:
                                 type: string
                                 example: Incorrect password
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -130,13 +130,13 @@ paths:
                       type: integer
                   example: 1
             responses:
-                '200':
+                "200":
                     description: Utilisateur trouvé
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/User'
-                '404':
+                                $ref: "#/components/schemas/User"
+                "404":
                     description: Utilisateur non trouvé
                     content:
                         application/json:
@@ -146,7 +146,7 @@ paths:
                                     error:
                                         type: string
                                         example: User not found
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -169,15 +169,15 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/UserInput'
+                            $ref: "#/components/schemas/UserInput"
             responses:
-                '200':
+                "200":
                     description: Utilisateur mis à jour
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/User'
-                '404':
+                                $ref: "#/components/schemas/User"
+                "404":
                     description: Utilisateur non trouvé
                     content:
                         application/json:
@@ -187,7 +187,7 @@ paths:
                                     error:
                                         type: string
                                         example: User not found
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -206,7 +206,7 @@ paths:
                       type: integer
                   example: 1
             responses:
-                '200':
+                "200":
                     description: Utilisateur supprimé
                     content:
                         application/json:
@@ -216,7 +216,7 @@ paths:
                                     message:
                                         type: string
                                         example: User deleted
-                '404':
+                "404":
                     description: Utilisateur non trouvé
                     content:
                         application/json:
@@ -226,7 +226,7 @@ paths:
                                     error:
                                         type: string
                                         example: User not found
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -238,22 +238,22 @@ paths:
         get:
             summary: Récupère la liste des cartes Pokémon
             responses:
-                '200':
+                "200":
                     description: Liste des cartes Pokémon
                     content:
                         application/json:
                             schema:
                                 type: array
                                 items:
-                                    $ref: '#/components/schemas/PokemonCard'
-                '204':
+                                    $ref: "#/components/schemas/PokemonCard"
+                "204":
                     description: Aucune carte Pokémon trouvée
                     content:
                         application/json:
                             schema:
                                 type: array
                                 example: []
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -269,29 +269,29 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/PokemonCardInput'
+                            $ref: "#/components/schemas/PokemonCardInput"
             responses:
-                '201':
+                "201":
                     description: Carte Pokémon créée
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/PokemonCard'
-                '400':
+                                $ref: "#/components/schemas/PokemonCard"
+                "400":
                     description: Données invalides
                     content:
                         text/plain:
                             schema:
                                 type: string
                                 example: Le champ "name" doit être rempli
-                '404':
+                "404":
                     description: Type de Pokémon non trouvé
                     content:
                         text/plain:
                             schema:
                                 type: string
                                 example: Le type entré dans le body de la requête (6) n'existe pas
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -310,13 +310,13 @@ paths:
                       type: integer
                   example: 1
             responses:
-                '200':
+                "200":
                     description: Carte Pokémon trouvée
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/PokemonCard'
-                '404':
+                                $ref: "#/components/schemas/PokemonCard"
+                "404":
                     description: Carte Pokémon non trouvée
                     content:
                         application/json:
@@ -326,7 +326,7 @@ paths:
                                     error:
                                         type: string
                                         example: PokemonCard not found
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -349,29 +349,29 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/PokemonCardInput'
+                            $ref: "#/components/schemas/PokemonCardInput"
             responses:
-                '200':
+                "200":
                     description: Carte Pokémon mise à jour
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/PokemonCard'
-                '400':
+                                $ref: "#/components/schemas/PokemonCard"
+                "400":
                     description: Données invalides
                     content:
                         text/plain:
                             schema:
                                 type: string
                                 example: Le champ "name" doit être rempli
-                '404':
+                "404":
                     description: Carte Pokémon ou type non trouvé
                     content:
                         text/plain:
                             schema:
                                 type: string
                                 example: Le pokémon entré en paramètre (1) n'existe pas
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -390,16 +390,16 @@ paths:
                       type: integer
                   example: 1
             responses:
-                '204':
+                "204":
                     description: Carte Pokémon supprimée
-                '404':
+                "404":
                     description: Carte Pokémon non trouvée
                     content:
                         text/plain:
                             schema:
                                 type: string
                                 example: Le pokémon n°1 n'existe pas
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -410,22 +410,22 @@ paths:
         get:
             summary: Récupère la liste des attaques Pokémon
             responses:
-                '200':
+                "200":
                     description: Liste des attaques Pokémon
                     content:
                         application/json:
                             schema:
                                 type: array
                                 items:
-                                    $ref: '#/components/schemas/PokemonAttack'
-                '204':
+                                    $ref: "#/components/schemas/PokemonAttack"
+                "204":
                     description: Aucune attaque Pokémon trouvée
                     content:
                         application/json:
                             schema:
                                 type: array
                                 example: []
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -441,15 +441,15 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/PokemonAttackInput'
+                            $ref: "#/components/schemas/PokemonAttackInput"
             responses:
-                '201':
+                "201":
                     description: Attaque Pokémon créée
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/PokemonAttack'
-                '400':
+                                $ref: "#/components/schemas/PokemonAttack"
+                "400":
                     description: Données invalides ou manquantes
                     content:
                         application/json:
@@ -463,8 +463,8 @@ paths:
                                         type: array
                                         items:
                                             type: string
-                                        example: ['name', 'damages']
-                '404':
+                                        example: ["name", "damages"]
+                "404":
                     description: Type de Pokémon non trouvé
                     content:
                         application/json:
@@ -474,7 +474,7 @@ paths:
                                     error:
                                         type: string
                                         example: Unknown type
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -493,13 +493,13 @@ paths:
                       type: integer
                   example: 1
             responses:
-                '200':
+                "200":
                     description: Attaque Pokémon trouvée
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/PokemonAttack'
-                '404':
+                                $ref: "#/components/schemas/PokemonAttack"
+                "404":
                     description: Attaque Pokémon non trouvée
                     content:
                         application/json:
@@ -509,7 +509,7 @@ paths:
                                     error:
                                         type: string
                                         example: PokemonAttack not found
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -532,15 +532,15 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/PokemonAttackInput'
+                            $ref: "#/components/schemas/PokemonAttackInput"
             responses:
-                '200':
+                "200":
                     description: Attaque Pokémon mise à jour
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/PokemonAttack'
-                '400':
+                                $ref: "#/components/schemas/PokemonAttack"
+                "400":
                     description: Données invalides ou manquantes
                     content:
                         application/json:
@@ -554,8 +554,8 @@ paths:
                                         type: array
                                         items:
                                             type: string
-                                        example: ['name', 'damages']
-                '404':
+                                        example: ["name", "damages"]
+                "404":
                     description: Attaque Pokémon ou type non trouvé
                     content:
                         application/json:
@@ -565,7 +565,7 @@ paths:
                                     error:
                                         type: string
                                         example: Attack not found
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
@@ -584,7 +584,7 @@ paths:
                       type: integer
                   example: 1
             responses:
-                '200':
+                "200":
                     description: Attaque Pokémon supprimée
                     content:
                         application/json:
@@ -594,7 +594,7 @@ paths:
                                     message:
                                         type: string
                                         example: Attack deleted
-                '404':
+                "404":
                     description: Attaque Pokémon non trouvée
                     content:
                         application/json:
@@ -604,7 +604,7 @@ paths:
                                     error:
                                         type: string
                                         example: Attack not found
-                '500':
+                "500":
                     description: Erreur serveur
                     content:
                         text/plain:
